@@ -1,0 +1,46 @@
+name: qing-panel-release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build single-file panel
+        env:
+          VERSION: v1.25.4-qing.${{ github.run_number }}
+        run: bun run build
+
+      - name: Prepare asset
+        run: |
+          mv dist/index.html dist/management.html
+          ls -lh dist/management.html
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v1.25.4-qing.${{ github.run_number }}
+        run: |
+          gh release create "$TAG"             dist/management.html             --target "${{ github.sha }}"             --title "$TAG"             --notes "Custom management panel with Quota Drain routing support."
