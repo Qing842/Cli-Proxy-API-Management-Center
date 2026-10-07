@@ -1,5 +1,11 @@
 # Repository Guidelines
 
+## Repository
+
+- Maintained fork: https://github.com/Qing842/Cli-Proxy-API-Management-Center
+- Upstream: https://github.com/router-for-me/Cli-Proxy-API-Management-Center
+- Fork handover docs: README_CN.md and docs/HANDOVER_CN.md
+
 ## Project Scope & Structure
 
 This is a React 19 + TypeScript + Vite management frontend for CLI Proxy API, not the proxy itself. It exclusively uses the backend v8 Management API under `/v8/management` and the v8 configuration layout; do not add v0 fallbacks or legacy config adapters. Plugin resources and custom HTTP extensions are exceptions: preserve their backend-declared paths.
