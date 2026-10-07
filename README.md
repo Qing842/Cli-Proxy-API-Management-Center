@@ -1,38 +1,48 @@
-# Qing842 CLI Proxy API Management Center
+# Qing842 CLI Proxy API Management Center 维护版
 
-This repository is the maintained Qing842 fork of CLI Proxy API Management Center.
+[中文](README.md) | [English](README_EN.md)
 
-It tracks the upstream management UI while preserving Qing842-specific production integration, especially Quota Drain routing support and the custom management.html release pipeline.
+这是 Qing842 维护的 CLI Proxy API Management Center Fork。它与 Qing842 CLIProxyAPI 后端配套使用，目标是在持续同步上游 UI 的同时，稳定保留维护版功能、单文件发布流程和交接资料。
 
-## Fork-specific responsibilities
+## 当前维护版差异
 
-- Expose Quota Drain in the routing strategy UI.
-- Keep the backend v8 configuration contract in sync with the Qing842 CLIProxyAPI fork.
-- Build a single-file management.html artifact.
-- Publish a GitHub Release automatically from main.
-- Provide handover, release, deployment, and upstream-sync documentation.
+1. 支持 Quota Drain（额度消耗优先）路由策略。
+2. main 更新后自动构建单文件管理中心。
+3. dist/index.html 会重命名为 management.html。
+4. management.html 自动发布到 GitHub Release。
+5. 后端 production config 通过 management.panel-github-repository 指向本仓库。
 
-## Documentation
-
-- Chinese overview: README_CN.md
-- Handover: docs/HANDOVER_CN.md
-- Architecture: docs/ARCHITECTURE_CN.md
-- Deployment: docs/DEPLOYMENT_CN.md
-- Release process: docs/RELEASE_CN.md
-- Upstream synchronization: docs/UPSTREAM_SYNC_CN.md
-- Troubleshooting: docs/TROUBLESHOOTING_CN.md
-
-## Repositories
-
-Maintained fork:
-https://github.com/Qing842/Cli-Proxy-API-Management-Center
-
-Upstream:
-https://github.com/router-for-me/Cli-Proxy-API-Management-Center
-
-Backend fork:
+后端仓库：
 https://github.com/Qing842/CLIProxyAPI
 
-## License and attribution
+## 文档入口
 
-This project remains under the upstream MIT license. Keep LICENSE and its copyright notices intact.
+- 交接总览：docs/HANDOVER_CN.md
+- 架构：docs/ARCHITECTURE_CN.md
+- 部署：docs/DEPLOYMENT_CN.md
+- 发布流程：docs/RELEASE_CN.md
+- 同步上游：docs/UPSTREAM_SYNC_CN.md
+- 故障排查：docs/TROUBLESHOOTING_CN.md
+
+## 技术栈
+
+- React 19
+- TypeScript
+- Vite 8
+- Bun 1.3.14
+- 后端 API：仅 v8 Management API
+- 发布物：单文件 management.html
+
+## 上游关系
+
+维护版：
+https://github.com/Qing842/Cli-Proxy-API-Management-Center
+
+上游：
+https://github.com/router-for-me/Cli-Proxy-API-Management-Center
+
+同步上游必须走临时同步分支和 PR，不要用 reset --hard 或 force push 覆盖维护版 main。
+
+## License
+
+本项目沿用上游 MIT License。LICENSE 必须保留原版权声明和许可文本。
