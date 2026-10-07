@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { parse as parseYaml } from 'yaml';
 import { parseRoutingStrategy, useVisualConfig } from '../src/hooks/useVisualConfig';
 
-describe('visual config weighted routing strategy', () => {
+describe('visual config routing strategy', () => {
   test('recognizes the weighted-round-robin backend value', () => {
     expect(parseRoutingStrategy('weighted-round-robin')).toBe('weighted-round-robin');
     expect(parseRoutingStrategy('weightedroundrobin')).toBe('weighted-round-robin');
@@ -12,6 +12,9 @@ describe('visual config weighted routing strategy', () => {
     expect(parseRoutingStrategy('fill-first')).toBe('fill-first');
     expect(parseRoutingStrategy('fillfirst')).toBe('fill-first');
     expect(parseRoutingStrategy('ff')).toBe('fill-first');
+    expect(parseRoutingStrategy('quota-drain')).toBe('quota-drain');
+    expect(parseRoutingStrategy('quotadrain')).toBe('quota-drain');
+    expect(parseRoutingStrategy('qd')).toBe('quota-drain');
     expect(parseRoutingStrategy(undefined)).toBe('round-robin');
   });
 
@@ -38,5 +41,30 @@ describe('visual config weighted routing strategy', () => {
     const result = markup.slice('<pre>'.length, -'</pre>'.length);
 
     expect(parseYaml(result)).toEqual({ routing: { strategy: 'weighted-round-robin' } });
+  });
+
+  test('writes quota-drain without coercing it to round-robin', () => {
+    function Harness() {
+      const visualConfig = useVisualConfig();
+      const [phase, setPhase] = useState(0);
+
+      if (phase === 0) {
+        visualConfig.setVisualValues({ routingStrategy: 'quota-drain' });
+        setPhase(1);
+      } else {
+        return createElement(
+          'pre',
+          null,
+          visualConfig.applyVisualChangesToYaml('routing:\n  strategy: round-robin\n')
+        );
+      }
+
+      return null;
+    }
+
+    const markup = renderToStaticMarkup(createElement(Harness));
+    const result = markup.slice('<pre>'.length, -'</pre>'.length);
+
+    expect(parseYaml(result)).toEqual({ routing: { strategy: 'quota-drain' } });
   });
 });
