@@ -1,5 +1,9 @@
 # Qing842 CLI Proxy API Management Center
 
+> **中文说明**  
+> 这是 Qing842 维护的 CLI Proxy API Management Center Fork，与 Qing842/CLIProxyAPI 配套使用，保留 Quota Drain 管理界面和自定义 management.html 发布流程。  
+> 完整中文总览请看 [README_CN.md](README_CN.md)，交接说明请看 [docs/HANDOVER_CN.md](docs/HANDOVER_CN.md)。
+
 This repository is the maintained Qing842 fork of CLI Proxy API Management Center.
 
 It tracks the upstream management UI while preserving Qing842-specific production integration, especially Quota Drain routing support and the custom management.html release pipeline.
